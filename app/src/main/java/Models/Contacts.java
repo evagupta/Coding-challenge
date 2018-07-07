@@ -8,22 +8,14 @@ import java.util.List;
 
 public class Contacts {
 
+    // Getter and setter class
+
     String companyName;
     String parent;
     String name;
     String phone;
     String manager;
     String addresses;
-
-    List<String> list = null;
-
-    public List<String> getList() {
-        return list;
-    }
-
-    public void setList(List<String> list) {
-        this.list = list;
-    }
 
     public String getCompanyName() {
         return companyName;

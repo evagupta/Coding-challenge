@@ -22,10 +22,14 @@ import Models.Contacts;
 
 public class ContactAdapter extends BaseAdapter implements Filterable{
 
+    // Initializing the variables
+
     private Context context;
     private List<Contacts> contactList;
     private List<Contacts> permanent;
     private ContactFilter mfiltersearch;
+
+    //Adapter Constructor
 
     public ContactAdapter(Context context, List<Contacts> contactList) {
         this.context = context;
@@ -79,22 +83,15 @@ public class ContactAdapter extends BaseAdapter implements Filterable{
             holder = (Holder) convertView.getTag();
         }
 
-        holder.mTextViewName.setText(contactList.get(position).getCompanyName());
-        holder.mTextViewPhone.setText(contactList.get(position).getPhone());
-        holder.mTextViewParent.setText(contactList.get(position).getParent());
-        holder.mTextViewManager.setText(contactList.get(position).getManager());
-        holder.mTextViewAddresses.setText(contactList.get(position).getAddresses());
-        holder.getmTextViewSimpleName.setText(contactList.get(position).getName());
+        // Setting the Data on the views
 
-     /*   Log.e("PHONE????",""+ contactList.get(position).getList());
+            holder.mTextViewName.setText("Company Name: " + contactList.get(position).getCompanyName());
+            holder.mTextViewPhone.setText("Phone Number: " + contactList.get(position).getPhone());
+            holder.mTextViewParent.setText("Parent: " + contactList.get(position).getParent());
+            holder.mTextViewManager.setText("Managers: " + contactList.get(position).getManager());
+            holder.mTextViewAddresses.setText("Addresses: " + contactList.get(position).getAddresses());
+            holder.getmTextViewSimpleName.setText("Name: "+contactList.get(position).getName());
 
-
-          for (int i = 0;i<contactList.get(position).getList().size();i++){
-              String managers = String.valueOf(contactList.get(i));
-              Log.e("ADAPTER::::",managers);
-          //    holder.mTextViewPhone.setText(contactList.get(i));
-          }
-*/
         return convertView;
     }
 
@@ -119,6 +116,7 @@ public class ContactAdapter extends BaseAdapter implements Filterable{
         return mfiltersearch;
     }
 
+    // View Holder for the adapter
     private class Holder {
         public TextView mTextViewName, mTextViewPhone,mTextViewParent,mTextViewManager,mTextViewAddresses,getmTextViewSimpleName;
     }

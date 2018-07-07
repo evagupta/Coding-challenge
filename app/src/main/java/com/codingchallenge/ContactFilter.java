@@ -1,10 +1,8 @@
 package com.codingchallenge;
 
-import android.util.Log;
 import android.widget.Filter;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 import Adapter.ContactAdapter;
@@ -15,6 +13,8 @@ import Models.Contacts;
  */
 
 public class ContactFilter extends Filter {
+
+    // Intializing the variables
 
     private List<Contacts> contacts = new ArrayList<Contacts>();
     private ContactAdapter mAdapter;
@@ -38,13 +38,16 @@ public class ContactFilter extends Filter {
         } else {
             contacts = mylist;
 
-            List<Contacts> cont = new LinkedList<Contacts>();
+            List<Contacts> cont = new ArrayList<>();
 
             for (int i = 0; i < contacts.size(); i++) {
                 Contacts p = contacts.get(i);
-                if (p.getCompanyName().toString().toLowerCase().contains(constraint.toString().toLowerCase())) {
-                    cont.add(p);
+                if (p.getCompanyName() != null){
+                    if (p.getCompanyName().toString().toLowerCase().contains(constraint.toString().toLowerCase())) {
+                        cont.add(p);
+                    }
                 }
+
                 results.values = cont;
                 results.count = cont.size();
             }

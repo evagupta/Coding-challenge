@@ -15,6 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/black"
+        android:text="@string/no_data"
         android:visibility="visible"
         android:textSize="@dimen/text_size" />
 
@@ -26,6 +27,7 @@
         android:layout_below="@id/tvname"
         android:textColor="@color/black"
         android:visibility="visible"
+        android:text="@string/no_data"
         android:textSize="@dimen/text_size" />
     <TextView
         android:id="@+id/tvManager"
@@ -35,6 +37,7 @@
         android:layout_below="@id/tvphone"
         android:textColor="@color/black"
         android:visibility="visible"
+        android:text="@string/no_data"
         android:textSize="@dimen/text_size" />
     <TextView
         android:id="@+id/tvAddresses"
@@ -44,6 +47,7 @@
         android:layout_below="@id/tvManager"
         android:textColor="@color/black"
         android:visibility="visible"
+        android:text="@string/no_data"
         android:textSize="@dimen/text_size" />
     <TextView
         android:id="@+id/tvparent"
@@ -53,6 +57,7 @@
         android:layout_below="@id/tvAddresses"
         android:textColor="@color/black"
         android:visibility="visible"
+        android:text="@string/no_data"
         android:textSize="@dimen/text_size" />
     <TextView
         android:id="@+id/tvsimplename"
@@ -60,6 +65,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_top"
         android:layout_below="@id/tvparent"
+        android:text="@string/no_data"
         android:textColor="@color/black"
         android:visibility="visible"
         android:textSize="@dimen/text_size" />

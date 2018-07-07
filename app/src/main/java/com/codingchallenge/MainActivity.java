@@ -28,12 +28,12 @@ import Models.Contacts;
 
 public class MainActivity extends AppCompatActivity {
 
+    //Initializing the variables
+
     private ListView listView;
     private List<Contacts> contactList;
     private ContactAdapter adapter;
     private AutoCompleteTextView searchEditText;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,9 +42,10 @@ public class MainActivity extends AppCompatActivity {
         listView = (ListView) findViewById(R.id.listView);
         searchEditText = (AutoCompleteTextView) findViewById(R.id.searchEditText);
 
+        // WebService method called
         fetchContacts();
 
-
+        // For the search of the elements in the listView through Autocomplete TextView
         searchEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -70,118 +71,120 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    // HTTP call
     private void fetchContacts() {
 
         String URL = "https://api.myjson.com/bins/jz6bp";
 
-
         StringRequest req = new StringRequest(Request.Method.GET, URL,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
+        new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
 
-                        contactList = new ArrayList<Contacts>();
-                        try {
-                            JSONObject jsonObject = new JSONObject(response);
+                contactList = new ArrayList<Contacts>();
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
 
-                            Log.e("RESPONSE",response);
+                    JSONArray json_contacts = jsonObject.getJSONArray("contacts");
+                    for (int m = 0;m<json_contacts.length();m++) {
 
-                            JSONArray json_contacts = jsonObject.getJSONArray("contacts");
-
-                            for (int m = 0;m<json_contacts.length();m++) {
-
-                                Contacts model = new Contacts();
-
-                                JSONObject object = json_contacts.getJSONObject(m);
-                                if (object.has("companyName")) {
-                                    model.setCompanyName(object.getString("companyName"));
-                                }/*else{
-                                    model.setParent(" ");
-                                }*/
-                                if (object.has("parent")) {
-                                    model.setParent(object.getString("parent"));
-                                }else{
-                                    model.setParent(" ");
-                                }
-                                if (object.has("name")) {
-                                    model.setName(object.getString("name"));
-                                }else{
-                                    model.setName(" ");
-                                }
-
-
-                                if (object.has("managers")) {
-                                    JSONArray jsonArray_managers = object.getJSONArray("managers");
-                                  //  List<String> sample = new ArrayList<String>();
-
-                                    Log.e("managers", "" + jsonArray_managers);
-                                    for (int n = 0; n < jsonArray_managers.length(); n++) {
-                                        String value = (String) jsonArray_managers.get(n);
-                                        /*sample.add(value);
-                                        model.setList(sample);*/
-                                       model.setManager(value);
-                                    //    Log.e("managers<><<<<>>>", "" + model.getList());
-                                    }
-                                }
-
-                                if (object.has("phones")) {
-                                    JSONArray jsonArray_phones = object.getJSONArray("phones");
-                                    Log.e("phones", "" + jsonArray_phones);
-                                    for (int p = 0; p < jsonArray_phones.length(); p++) {
-
-                                        String valuePhone = (String) jsonArray_phones.get(p);
-                                        model.setPhone(valuePhone);
-                                        Log.e("phones<><<<<>>>", "" + valuePhone);
-                                    }
-                                }
-
-                                if (object.has("addresses")) {
-                                    JSONArray jsonArray_addresses = object.getJSONArray("addresses");
-                                    Log.e("address", "" + jsonArray_addresses);
-                                    for (int q = 0; q < jsonArray_addresses.length(); q++) {
-
-                                        String valueAddress = (String) jsonArray_addresses.get(q);
-                                        model.setAddresses(valueAddress);
-                                        Log.e("address<><<<<>>>", "" + valueAddress);
-                                    }
-                                }
-
-                                contactList.add(model);
-                            }
-                            if (contactList.size() == 0){
-                                searchEditText.setEnabled(false);
-                                Toast.makeText(MainActivity.this,"No results found",Toast.LENGTH_SHORT).show();
-                            }
-                            else {
-                                searchEditText.setEnabled(true);
-                                adapter = new ContactAdapter(MainActivity.this, contactList);
-                                listView.setAdapter(adapter);
-
-                            }
-                            Log.e("ListSize", "" + contactList.size());
+                        Contacts model = new Contacts();
+                        JSONObject object = json_contacts.getJSONObject(m);
+                        if (object.has("companyName")) {
+                            model.setCompanyName(object.getString("companyName"));
+                        }else{
+                            model.setCompanyName("No Data");
+                        }
+                        if (object.has("parent")) {
+                            model.setParent(object.getString("parent"));
+                        }else{
+                            model.setParent("No Data");
+                        }
+                        if (object.has("name")) {
+                            model.setName(object.getString("name"));
+                        }else{
+                            model.setName("No Data");
                         }
 
-                        catch (JSONException e){
-                            Log.e("EXCEPTION", e.toString());
+                        if (object.has("managers")) {
+                            JSONArray jsonArray_managers = object.getJSONArray("managers");
+
+                            StringBuilder stringBuilder = new StringBuilder();
+                            Log.e("managers", "" + jsonArray_managers);
+                            for (int n = 0; n < jsonArray_managers.length(); n++) {
+                                String value = (String) jsonArray_managers.get(n);
+
+                                stringBuilder.append(value+",");
+                                String manager = stringBuilder.toString();
+                                model.setManager(manager.substring(0,manager.length()-1));
+
+                            }
+                        }else{
+                            model.setManager("No Data");
                         }
+
+                        if (object.has("phones")) {
+                            JSONArray jsonArray_phones = object.getJSONArray("phones");
+                            StringBuilder stringBuilder = new StringBuilder();
+                            Log.e("phones", "" + jsonArray_phones);
+                            for (int p = 0; p < jsonArray_phones.length(); p++) {
+
+                                String valuePhone = (String) jsonArray_phones.get(p);
+                                stringBuilder.append(valuePhone+",");
+                                String manager = stringBuilder.toString();
+                                model.setPhone(manager.substring(0,manager.length()-1));
+                            }
+                        }else{
+                            model.setPhone("No Data");
+                        }
+                        if (object.has("addresses")) {
+                            JSONArray jsonArray_addresses = object.getJSONArray("addresses");
+                            StringBuilder stringBuilder = new StringBuilder();
+                            Log.e("address", "" + jsonArray_addresses);
+                            for (int q = 0; q < jsonArray_addresses.length(); q++) {
+                                String valueAddress = (String) jsonArray_addresses.get(q);
+                                stringBuilder.append(valueAddress+",");
+                                String manager = stringBuilder.toString();
+                                model.setAddresses(manager.substring(0,manager.length()-1));
+                            }
+                        }else {
+                            model.setAddresses("No Data");
+                        }
+
+                        contactList.add(model);
                     }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.e("error", error.toString());
+                    if (contactList.size() == 0){
+                        searchEditText.setEnabled(false);
+                        Toast.makeText(MainActivity.this,"No results found",Toast.LENGTH_SHORT).show();
+                    }
+                    else {
+                        searchEditText.setEnabled(true);
+                        adapter = new ContactAdapter(MainActivity.this, contactList);
+                        listView.setAdapter(adapter);
 
                     }
-                });
+
+                }
+
+                catch (JSONException e){
+
+                }
+            }
+        },
+        new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+            }
+        });
         req.setRetryPolicy(new DefaultRetryPolicy(10000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         Volley.newRequestQueue(this).add(req);
 
     }
 
 
+    // onBackPressed method to go out of the class
     @Override
     public void onBackPressed() {
-        // close search view on back button pressed
         super.onBackPressed();
     }
 
