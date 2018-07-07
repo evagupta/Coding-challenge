@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent">
+
+    <AutoCompleteTextView
+        android:id="@+id/searchEditText"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/searchbar_height"
+        android:hint="@string/search_hint"
+        android:textColorHint="#cccccc"
+        android:singleLine="true"
+        android:textColor="@color/black"
+        android:background="@drawable/background"
+        android:textSize="@dimen/text_size"
+        android:padding="@dimen/margin_top"
+        android:layout_alignParentLeft="true" />
+
+<ListView
+    android:id="@+id/listView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:scrollbarStyle="outsideInset"
+    android:dividerHeight="@dimen/divider_height"
+    android:layout_below="@+id/searchEditText" />
+
+</RelativeLayout>
